@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>اختبار علوم الحاسوب</title>
+  <style>
+    :root {
+      --navy: #13305e;
+      --blue: #2350c4;
+      --ok: #1b7f3b;
+      --bad: #b42318;
+      --bg: #f4f6fb;
+      --card: #fff;
+      --line: #dde3ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: #1d2433;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(120deg, #102a52, #2350c4);
+      color: #fff;
+      text-align: center;
+      padding: 28px 16px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: .9;
+    }
+
+    main {
+      max-width: 820px;
+      margin: 24px auto;
+      padding: 0 14px 40px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: .85rem;
+      color: var(--blue);
+      background: #e8efff;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .note {
+      font-size: .92rem;
+      color: #4a5468;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    label.lbl {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: var(--navy);
+    }
+
+    input[type=text] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    input[type=text]:focus {
+      outline: 2px solid #f5a623;
+      border-color: #f5a623;
+    }
+
+    .q {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .q:last-child {
+      border-bottom: none;
+    }
+
+    .q .text {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .opts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .opts.tf {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+
+    .opt:hover {
+      background: #f7f9ff;
+    }
+
+    .opt input {
+      margin: 0;
+    }
+
+    .feedback {
+      margin-top: 6px;
+      font-size: .92rem;
+      display: none;
+    }
+
+    .q.right .feedback,
+    .q.wrong .feedback {
+      display: block;
+    }
+
+    .q.right .feedback {
+      color: var(--ok);
+    }
+
+    .q.wrong .feedback {
+      color: var(--bad);
+    }
+
+    .q.right {
+      background: #effaf3;
+      border-radius: 8px;
+    }
+
+    .q.wrong {
+      background: #fff1f0;
+      border-radius: 8px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 10px 0 0;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 11px 22px;
+      border-radius: 9px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .secondary {
+      background: #e8efff;
+      color: var(--navy);
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+    }
+
+    .score {
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: var(--navy);
+      margin: 6px 0;
+    }
+
+    .msg {
+      font-size: 1.05rem;
+    }
+
+    @media (max-width:600px) {
+
+      .fields,
+      .opts {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+
+      button,
+      .actions,
+      input[type=text] {
+        display: none !important;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .card {
+        border: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>اختبار علوم الحاسوب</h1>
+    <p>الصف الأول الثانوي بنين — صح وخطأ واختيار من متعدد</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>بيانات الطالب</h2>
+      <div class="fields">
+        <div><label class="lbl" for="sname">اسم الطالب</label><input type="text" id="sname" placeholder="اكتب اسمك">
+        </div>
+        <div><label class="lbl" for="sclass">الفصل</label><input type="text" id="sclass" placeholder="اكتب الفصل"></div>
+      </div>
+      <p class="note" style="margin-top:14px">أجب عن جميع الأسئلة ثم اضغط «تسليم الاختبار». لكل سؤال درجة واحدة، والدرجة
+        النهائية 30.</p>
+    </section>
+
+    <section class="card">
+      <h2>القسم الأول: صح أم خطأ؟ <span class="badge">14 درجة</span></h2>
+      <div id="tf"></div>
+    </section>
+
+    <section class="card">
+      <h2>القسم الثاني: اختر الإجابة الصحيحة <span class="badge">16 درجة</span></h2>
+      <div id="mcq"></div>
+    </section>
+
+    <div class="actions">
+      <button class="primary" id="submitBtn" onclick="submitTest()">تسليم الاختبار وحساب النتيجة</button>
+      <button class="secondary" id="retryBtn" onclick="retryTest()">إعادة الاختبار</button>
+    </div>
+
+    <section class="card" id="result">
+      <h2 style="justify-content:center">نتيجة الاختبار</h2>
+      <div class="score" id="scoreText"></div>
+      <p class="msg" id="msgText"></p>
+      <div class="actions"><button class="secondary" onclick="window.print()">طباعة النتيجة</button></div>
+    </section>
+  </main>
+
+  <script>
+    const TF = [
+      { q: "النظام العشري هو النظام الذي نتعامل به في حياتنا اليومية ويتكون من 10 أرقام.", a: true },
+      { q: "يتم التمييز بين الأنظمة العددية بكتابة العدد بين قوسين ووضع أساس النظام أسفل القوس.", a: true },
+      { q: "تُمثَّل الأعداد من 10 إلى 15 في النظام السادس عشر بالرموز A إلى F.", a: true },
+      { q: "البوابة المنطقية الوحيدة التي لديها مدخل واحد ومخرج واحد هي بوابة OR.", a: false },
+      { q: "عند قسمة عدد على عدد أكبر منه يكون ناتج القسمة صفرًا وباقي القسمة هو العدد الأصلي.", a: true },
+      { q: "ناتج جمع (1 + 1 + 1)₂ يساوي (11)₂.", a: true },
+      { q: "يعتمد الحاسوب بشكل أساسي على النظام العشري.", a: false },
+      { q: "أساس النظام الثنائي هو 2.", a: true },
+      { q: "إذا كانت مدخلات بوابة AND هما 1 و0 فإن الناتج يساوي 1.", a: false },
+      { q: "بوابة AND تعطي ناتجًا يساوي 1 إذا كان كلا المدخلين يساوي 1.", a: true },
+      { q: "عند ضغط الملفات بطريقة Lossless يتم حذف الأصوات غير المسموعة.", a: false },
+      { q: "من أمثلة خوارزميات ضغط البيانات خوارزمية هوفمان.", a: true },
+      { q: "للتحويل من النظام الثنائي إلى العشري نستخدم قوى العدد 2 ونضربها في قيم الخانات (0 أو 1).", a: true },
+      { q: "ناتج طرح (1000)₂ − (11)₂ يساوي (110)₂.", a: false }
+    ];
+
+    const MCQ = [
+      { q: "ما النظام العددي الذي يستخدم الأرقام من 0 إلى 9؟", o: ["الثنائي", "العشري", "الثماني", "السادس عشر"], a: 1 },
+      { q: "ما أساس النظام الثنائي؟", o: ["2", "8", "10", "16"], a: 0 },
+      { q: "ما أساس النظام الثماني؟", o: ["8", "2", "16", "10"], a: 0 },
+      { q: "ما أساس النظام السادس عشر؟", o: ["8", "2", "16", "10"], a: 2 },
+      { q: "أي مما يلي مثال على عدد بالنظام الثنائي؟", o: ["(101010)₂", "(125)₁₀", "(F3)₁₆", "(42)₁₀"], a: 0 },
+      { q: "ما قيمة العدد الثنائي (1010)₂ بالنظام العشري؟", o: ["10", "8", "14", "12"], a: 0 },
+      { q: "ما قيمة العدد العشري (8)₁₀ بالنظام الثنائي؟", o: ["(1010)₂", "(1000)₂", "(1110)₂", "(1100)₂"], a: 1 },
+      { q: "ما العملية المنطقية التي تعطي 1 عندما يكون كلا المدخلين 1؟", o: ["NOT", "OR", "XOR", "AND"], a: 3 },
+      { q: "ما وظيفة بوابة NOT؟", o: ["جمع المدخلين", "عكس قيمة المدخل", "إعطاء 1 دائمًا", "ضرب المدخلين"], a: 1 },
+      { q: "ما ناتج بوابة OR إذا كان المدخلان 0 و0؟", o: ["1", "0", "10", "غير محدد"], a: 1 },
+      { q: "ما ناتج بوابة XOR عندما يكون المدخلان متساويين؟", o: ["0", "1", "2", "لا يوجد ناتج"], a: 0 },
+      { q: "أي بوابة منطقية تعطي 1 عندما يختلف المدخلان؟", o: ["OR", "AND", "NOT", "XOR"], a: 3 },
+      { q: "ما اسم طريقة ضغط البيانات التي تحافظ على البيانات دون فقد؟", o: ["Lossless", "Lossy", "ASCII فقط", "Huffman"], a: 0 },
+      { q: "أي خوارزمية تُستخدم في ضغط البيانات؟", o: ["AND", "Huffman", "Unicode", "OR"], a: 1 },
+      { q: "أي نظام ترميز يُستخدم لتمثيل الحروف والأرقام في الحاسوب؟", o: ["AND", "ASCII", "Decimal", "XOR"], a: 1 },
+      { q: "ما ناتج جمع (1101)₂ + (11)₂؟", o: ["(1111)₂", "(10000)₂", "(1110)₂", "(10100)₂"], a: 1 }
+    ];
+
+    const AR = ["أ", "ب", "ج", "د"];
+    let locked = false;
+
+    function render() {
+      const tf = document.getElementById("tf");
+      tf.innerHTML = TF.map((item, i) => `
+    <div class="q" id="tfq${i}">
+      <div class="text">${i + 1}. ${item.q}</div>
+      <div class="opts tf">
+        <label class="opt"><input type="radio" name="tf${i}" value="t"> صح</label>
+        <label class="opt"><input type="radio" name="tf${i}" value="f"> خطأ</label>
+      </div>
+      <div class="feedback"></div>
+    </div>`).join("");
+
+      const mcq = document.getElementById("mcq");
+      mcq.innerHTML = MCQ.map((item, i) => `
+    <div class="q" id="mcqq${i}">
+      <div class="text">${TF.length + i + 1}. ${item.q}</div>
+      <div class="opts">
+        ${item.o.map((opt, j) => `<label class="opt"><input type="radio" name="mcq${i}" value="${j}"> ${opt}</label>`).join("")}
+      </div>
+      <div class="feedback"></div>
+    </div>`).join("");
+    }
+
+    function submitTest() {
+      if (locked) return;
+      const unanswered = [];
+      TF.forEach((_, i) => { if (!document.querySelector(`input[name="tf${i}"]:checked`)) unanswered.push(i + 1); });
+      MCQ.forEach((_, i) => { if (!document.querySelector(`input[name="mcq${i}"]:checked`)) unanswered.push(TF.length + i + 1); });
+      if (unanswered.length && !confirm(`لم تُجب عن ${unanswered.length} سؤال. هل تريد التسليم؟`)) return;
+
+      let score = 0;
+
+      TF.forEach((item, i) => {
+        const sel = document.querySelector(`input[name="tf${i}"]:checked`);
+        const correct = item.a ? "t" : "f";
+        const box = document.getElementById("tfq" + i);
+        const ok = sel && sel.value === correct;
+        if (ok) score++;
+        box.classList.add(ok ? "right" : "wrong");
+        box.querySelector(".feedback").textContent = ok ? "إجابة صحيحة" : `الإجابة الصحيحة: ${item.a ? "صح" : "خطأ"}`;
+      });
+
+      MCQ.forEach((item, i) => {
+        const sel = document.querySelector(`input[name="mcq${i}"]:checked`);
+        const ok = sel && Number(sel.value) === item.a;
+        if (ok) score++;
+        const box = document.getElementById("mcqq" + i);
+        box.classList.add(ok ? "right" : "wrong");
+        box.querySelector(".feedback").textContent = ok ? "إجابة صحيحة" : `الإجابة الصحيحة: ${item.o[item.a]}`;
+      });
+
+      const total = TF.length + MCQ.length;
+      const pct = Math.round(score / total * 100);
+      document.getElementById("scoreText").textContent = `${score} / ${total}`;
+      document.getElementById("msgText").textContent =
+        (document.getElementById("sname").value.trim() ? document.getElementById("sname").value.trim() + " — " : "") +
+        (pct >= 50 ? `نسبة النجاح ${pct}%. أحسنت.` : `نسبة النجاح ${pct}%. راجع الأسئلة التي أخطأت فيها.`);
+      document.getElementById("result").style.display = "block";
+
+      locked = true;
+      document.querySelectorAll("input[type=radio], input[type=text]").forEach(e => e.disabled = true);
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function retryTest() {
+      locked = false;
+      document.querySelectorAll("input[type=radio]").forEach(e => { e.checked = false; e.disabled = false; });
+      document.querySelectorAll("input[type=text]").forEach(e => e.disabled = false);
+      document.querySelectorAll(".q").forEach(q => q.classList.remove("right", "wrong"));
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("result").style.display = "none";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    render();
+  </script>
+</body>
+
+</html>
